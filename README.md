@@ -4,15 +4,15 @@
 
 
 # Descrição do Projeto
-A lambda iupp_transfer_events_ip6 possui a função de coletar os eventos do Kafka da ZUP, separar em mensagens separadas se necessario , enriquecer com metadados e enviar para a API Gateway (analytics-gerirdadosiupp-v1-ext-aws)
+A lambda iupp_transfer_events_ip6 possui a função de coletar os eventos do Kafka da ZUP, separar em mensagens apartadas se necessário, enriquecer com metadados e enviar para a API Gateway do Itaú (analytics-gerirdadosiupp-v1-ext-aws).
 
 
 
 ## Triggers da lambda
 
-Lambda possui conecção via trigger com Aws MSK nos seguintes Kafkas e topicos:
+Lambda possui conexão via trigger com AWS MSK nos seguintes Kafkas e tópicos:
 
-|Servidor KAFKA|Nome do topico|
+|Servidor KAFKA|Nome do tópico|
 |--------------|-------------|
 |iupp-prd-iupp-msk|iupp.checkout-manager.stream.order-cancelled|
 |iupp-prd-iupp-msk|iupp.checkout-manager.stream.order-paid|
@@ -21,7 +21,7 @@ Lambda possui conecção via trigger com Aws MSK nos seguintes Kafkas e topicos:
 
 ## Estrutura de pastas
 
-A estrutua de pastas esta dividida da seguinte forma:
+A estrutua de pastas está dividida da seguinte forma:
 
 ```text
 ├───mylayer
@@ -32,11 +32,11 @@ A estrutua de pastas esta dividida da seguinte forma:
 
 
 
-## Segundo a estrutura de pastas , seguem seus respectivos codigos python e suas funcionaliades
+## Segundo a estrutura de pastas , seguem seus respectivos codigos python e suas funcionalidades
 ```text
 > mylayer
 ```
-Nessa pasta temos um unico arquivo .txt
+Nessa pasta temos um único arquivo .txt
 No arquivo requirements.txt podemos incluir as bibliotecas que
 precisamos importar dentro da lambda
 
@@ -47,11 +47,11 @@ precisamos importar dentro da lambda
 `access_token_getter.py`
 
 ##### :hammer: def get_ip6_access_token:
-Constroi o header para chamada via request da API de transferencia de eventos
+Constrói o header para chamada via request da API de transferência de eventos
 
 ##### :hammer: def build_ip6_access_header:
 Invoca a lambda iupp_certificate para coletar token e token_type 
-para criar o header de invocação da API de transferencia de eventos
+para criar o header de invocação da API de transferência de eventos
 
 ```text
 > utils
@@ -63,7 +63,7 @@ Extrai as mensagens dos eventos recebidos
 Se tiver mais de uma mensagem por evento ele faz a extração de uma por uma
 
 ##### :hammer: def enrich_payload
-Realiza o enrequecimento do payload para o correto funcionamento da API de transferencia
+Realiza o enrequecimento do payload para o correto funcionamento da API de transferência
 "fields": [
             {
                 "specversion": specversion,
@@ -80,8 +80,8 @@ Realiza o enrequecimento do payload para o correto funcionamento da API de trans
 Gera no final o enriched_payload
 
 ##### :hammer: def enrich_message
-Realiza um segundo enriquecimento como metadados minimos para 
-o corret funcionamento da API de transferencia
+Realiza um segundo enriquecimento com metadados mínimos para 
+o corret funcionamento da API de transferência
 {
         "schema": schema,
         "id": id_,
@@ -95,7 +95,7 @@ o corret funcionamento da API de transferencia
     }
 
 ##### :hammer: def download_s3
-Função para fazer coletar a Key no bucket s3 de certificado
+Função para coletar a Key no bucket s3 de certificado
 
 ##### :hammer: def tranfer_messages_ip6
 Função invoca o download_s3 para coletar CERT_FILENAME_CERT, CERT_FILENAME_KEY
@@ -103,6 +103,6 @@ Realiza a chamada da API via request e envia o payload+metadados
 
 
 `lambda_handler.py`
-Realiza a chamada das funçoes na ordem correta para 
-criação do payload+metadados para envio a API de transferencia
+Realiza a chamada das funções na ordem correta para 
+criação do payload+metadados para envio a API de transferência
 
